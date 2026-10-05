@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useApi, useAuth, useCore } from '../../core/store';
+import { useApi } from '../../core/store';
+import { useAuth } from '../../core/auth';
 import { fmt, relDay, countdown } from '../../lib/tz';
 import { greeting } from '../../lib/date';
-import { Alert, Badge, BubbleIcon, Button, EmptyState, ErrorState, LoadingState, ProgressBar, Row, Section, Surface } from '../../ui/primitives';
+import { Badge, BubbleIcon, Button, ErrorState, LoadingState, ProgressBar, Row, Section, Surface } from '../../ui/primitives';
 import { Icon } from '../../ui/Icon';
 import { TaskDetail, TaskRow } from '../tasks/TaskParts';
 import type { Task } from '../../core/types';
@@ -42,12 +43,11 @@ export default function TodayPage() {
   const t = data!;
 
   const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
   const schedule = t.schedule.filter((e) => !e.allDay).sort((a, b) => a.start.localeCompare(b.start));
   const current = schedule.find((e) => {
     const s = new Date(e.start).getTime();
-    const e = e.end ? new Date(e.end).getTime() : s + 3600000;
-    return s <= now.getTime() && now.getTime() < e;
+    const endTime = e.end ? new Date(e.end).getTime() : s + 3600000;
+    return s <= now.getTime() && now.getTime() < endTime;
   });
   const next = schedule.find((e) => new Date(e.start).getTime() > now.getTime());
   const focusEntry = current ?? next ?? schedule[0];

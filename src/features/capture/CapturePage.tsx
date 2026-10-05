@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useCore } from '../../core/store';
 import { api } from '../../api/client';
-import { Alert, BubbleIcon, Button, PageHeader, Row, Section, Surface, Textarea } from '../../ui/primitives';
+import { Alert, BubbleIcon, Button, PageHeader, Surface, Textarea } from '../../ui/primitives';
 import type { Tone } from '../../ui/primitives';
 import type { IconName } from '../../ui/Icon';
-import { useToast } from '../../ui/overlay';
 
 interface CaptureType { id: string; label: string; icon: IconName; tone: Tone; hint: string; soon?: boolean }
 const TYPES: CaptureType[] = [
@@ -23,7 +22,6 @@ const TYPES: CaptureType[] = [
 
 export default function CapturePage() {
   const { addTask, run } = useCore();
-  const toast = useToast();
   const [type, setType] = useState('task');
   const [text, setText] = useState('');
   const current = TYPES.find((t) => t.id === type)!;

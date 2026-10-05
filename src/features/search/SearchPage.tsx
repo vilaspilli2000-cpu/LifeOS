@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi, useAuth } from '../../core/store';
+import { useApi } from '../../core/store';
+import { useAuth } from '../../core/auth';
 import { BubbleIcon, EmptyState, LoadingState, PageHeader, Row, SearchField, Section, Surface, Tabs } from '../../ui/primitives';
 import type { IconName } from '../../ui/Icon';
 
@@ -34,7 +35,7 @@ export default function SearchPage() {
 
       {!q.trim() ? (
         <Section title="Recent searches">
-          <div className="chips">{(settings.recentSearches ?? []).map((r) => <button key={r} type="button" className="chip" onClick={() => setQ(r)}>{r}</button>)}
+          <div className="chips">{(settings.recentSearches ?? []).map((r: string) => <button key={r} type="button" className="chip" onClick={() => setQ(r)}>{r}</button>)}
           {!settings.recentSearches?.length && <span className="muted small">Your recent searches will appear here.</span>}</div>
         </Section>
       ) : loading ? (

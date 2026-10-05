@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { useApi, useAuth } from '../../core/store';
+import { useApi } from '../../core/store';
+import { useAuth } from '../../core/auth';
 import { domainName } from '../../core/domains';
 import { dayKey, addDays as addDayKey, monthStartKey, addMonths, parseDay } from '../../lib/tz';
 import { fmt } from '../../lib/tz';
@@ -26,7 +27,7 @@ export default function CalendarPage() {
 
   const fromK = addDayKey(monthStartKey(cursorK), -7);
   const toK = addMonths(cursorK, 1);
-  const { data, loading, error, reload } = useApi<{ items: CalItem[]; tz: string }>(`/calendar?from=${fromK}&to=${toK}`);
+  const { data, loading, error } = useApi<{ items: CalItem[]; tz: string }>(`/calendar?from=${fromK}&to=${toK}`);
 
   const byDay = useMemo(() => {
     const m = new Map<string, CalItem[]>();
@@ -39,7 +40,7 @@ export default function CalendarPage() {
     return m;
   }, [data, tz]);
 
-  const { y, m, d } = parseDay(cursorK);
+  const { y, m } = parseDay(cursorK);
   const first = new Date(Date.UTC(y, m - 1, 1));
   const lead = (first.getUTCDay() + 6) % 7;
   const cells = Array.from({ length: 42 }, (_, i) => addDayKey(cursorK.replace(/-\d{2}$/, '-01'), i - lead));

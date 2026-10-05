@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useApi, useCore, useAuth } from '../../core/store';
+import { useApi, useCore } from '../../core/store';
+import { useAuth } from '../../core/auth';
 import { api } from '../../api/client';
 import { fmt, minutesLabel } from '../../lib/tz';
 import { Button, EmptyState, ErrorState, LoadingState, PageHeader, ProgressRing, Row, Section, Surface, Tabs, BubbleIcon } from '../../ui/primitives';

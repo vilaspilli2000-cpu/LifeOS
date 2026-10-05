@@ -1,12 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCore, useAuth } from '../../core/store';
+import { useCore } from '../../core/store';
 import type { Task } from '../../core/types';
-import { domainName } from '../../core/domains';
 import { Button, EmptyState, ErrorState, LoadingState, PageHeader, Surface, Tabs } from '../../ui/primitives';
 import { Menu } from '../../ui/overlay';
 import { Icon } from '../../ui/Icon';
-import { relDay } from '../../lib/tz';
 import { TaskDetail, TaskRow } from './TaskParts';
 
 type Filter = 'open' | 'today' | 'upcoming' | 'done';
@@ -15,7 +13,6 @@ const PRI = { high: 0, medium: 1, low: 2 } as const;
 
 export default function TasksPage() {
   const { tasks, status, reload } = useCore();
-  const { tz } = useAuth();
   const nav = useNavigate();
   const [filter, setFilter] = useState<Filter>('open');
   const [sort, setSort] = useState<Sort>('due');
@@ -57,7 +54,7 @@ export default function TasksPage() {
         {status === 'loading' && <div style={{ padding: 12 }}><LoadingState label="Loading tasks" /></div>}
         {status === 'error' && <ErrorState text="We couldn't load your tasks. Check your connection and try again." onRetry={reload} />}
         {status === 'ready' && visible.length === 0 && (
-          <EmptyState icon="tasks" title={filter === 'done' ? 'Nothing completed yet' : 'You're all clear'} text={filter === 'done' ? 'Completed tasks will collect here as a record of what you've done.' : 'No tasks match this view. Capture something new when it comes to mind.'} action={<Button onClick={() => nav('/capture')}>Capture a task</Button>} />
+          <EmptyState icon="tasks" title={filter === 'done' ? 'Nothing completed yet' : "You're all clear"} text={filter === 'done' ? "Completed tasks will collect here as a record of what you've done." : 'No tasks match this view. Capture something new when it comes to mind.'} action={<Button onClick={() => nav('/capture')}>Capture a task</Button>} />
         )}
         {status === 'ready' && visible.length > 0 && (
           <ul className="list divided stagger" key={filter + sort}>

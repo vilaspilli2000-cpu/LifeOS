@@ -1,6 +1,7 @@
 import type { Task } from '../../core/types';
 import { domainName } from '../../core/domains';
-import { useCore, useAuth } from '../../core/store';
+import { useCore } from '../../core/store';
+import { useAuth } from '../../core/auth';
 import { Badge, Button, Checkbox } from '../../ui/primitives';
 import { Overlay } from '../../ui/overlay';
 import { relDay } from '../../lib/tz';

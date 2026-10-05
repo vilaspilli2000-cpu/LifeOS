@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { DOMAINS } from '../../core/domains';
 import type { DomainDef } from '../../core/types';
 import { useApi } from '../../core/store';
-import { Badge, BubbleIcon, Button, PageHeader, Section, Surface, Row } from '../../ui/primitives';
+import { Badge, BubbleIcon, Button, PageHeader, Section, Row } from '../../ui/primitives';
 import { Overlay } from '../../ui/overlay';
 
 interface DomainSummary { [key: string]: { tasksOpen: number; goals: number; projects: number } }
