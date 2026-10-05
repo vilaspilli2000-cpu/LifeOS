@@ -9,7 +9,6 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "test:api": "node --test server/test/api.test.mjs",
-    "seed": "node server/seed.mjs",
     "server": "node server/index.mjs"
   },
   "dependencies": {
